@@ -1,16 +1,16 @@
 package com.dengene.com.libraryproject.controller;
 
 import com.dengene.com.libraryproject.Service.BookService;
+import com.dengene.com.libraryproject.dto.AuthorDTO;
 import com.dengene.com.libraryproject.dto.BookDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("library/v1/book")
@@ -31,4 +31,20 @@ public class BookController {
         return new ResponseEntity<>(bookService.addBook(bookDTO), HttpStatus.CREATED);
     }
 
+    @PutMapping
+    public ResponseEntity<BookDTO> updateBook(@RequestBody BookDTO bookDTO){
+
+        return new ResponseEntity<>(bookService.updateBook(bookDTO), HttpStatus.OK);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Map<String, String>> deleteBook(@RequestBody BookDTO bookDTO){
+
+        Map<String, String> map = new HashMap<>();
+        map.put("Message", "Author Successfully deleted Deleted");
+
+        bookService.deleteBook(bookDTO);
+
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
 }
