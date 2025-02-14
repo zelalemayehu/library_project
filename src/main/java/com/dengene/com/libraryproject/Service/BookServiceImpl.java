@@ -3,7 +3,6 @@ package com.dengene.com.libraryproject.Service;
 import com.dengene.com.libraryproject.model.Book;
 import com.dengene.com.libraryproject.dto.BookDTO;
 import com.dengene.com.libraryproject.repository.BookRepository;
-import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,13 +10,17 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@AllArgsConstructor
 @Service
 public class BookServiceImpl implements BookService{
 
     private final BookRepository bookRepository;
     @Autowired
     private ModelMapper mapper;
+
+    public BookServiceImpl(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
+
     @Override
     public List<BookDTO> getAllBook() {
         return bookRepository.findAll().stream().map(book -> mapper.map(book, BookDTO.class)).collect(Collectors.toList());
